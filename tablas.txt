@@ -1,0 +1,67 @@
+CREACION TABLAS INVENTARIO
+
+CLIENTE:
+
+create table cliente (
+ nombre varchar2(100),
+ id integer,
+ fecha timestamp,
+ primary key(id)
+ );
+ 
+REPUESTO:
+
+create table repuesto(
+  id integer,
+  idMarca integer,
+  nombre varchar2(100),
+  stock integer,
+  stockMin integer,
+  stockMax integer,
+  fecha timestamp,
+  primary key (id)
+  );
+  
+MARCA: 
+
+create table marca(
+  nombre varchar2(100),
+  id integer, 
+  fecha timestamp,
+  idRepuesto integer,
+  idAuto integer,
+  primary key (id)
+  );
+
+AUTOS:
+
+create table autos(
+  id integer,
+  idMarca integer,
+  modelo varchar2(100),
+  anio integer,
+  fecha timestamp,
+  primary key (id)
+  );
+
+MOVIMIENTOS:
+
+create table movimientos(
+  id integer,
+  idCliente integer,
+  idRepuesto integer,
+  idTipoMovimiento integer,
+  cantidad integer,
+  fecha timestamp,
+  primary key (id)
+  );
+  
+TIPOMOVIMIENTOS:
+
+create table tipoMovimientos(
+  id integer,
+  nombre varchar2(100),
+  fecha timestamp,
+  primary key (id)
+  );
+  
