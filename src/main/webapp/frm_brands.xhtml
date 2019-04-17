@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./template/main.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formBrands">
+            <p:growl/>
+            
+            <h:panelGrid columns="2" cellpadding="6">
+                <p:outputLabel value="Name" for="NameIn"/>    
+                <p:inputText value="#{brands.name}" required="true" requiredMessage="Name is required" id="NameIn"/>
+                
+                <p:commandButton value="Save" action="#{brands.save()}" update=":formBrands :formList" oncomplete="PF('tableWidget').filter();"  />
+           </h:panelGrid>
+       
+        </h:form>
+ 
+        <h:form id="formList">
+            <p:dataTable id="tableBrands" value="#{brands.listBrand}" 
+                         var="b" rowKey="#{b.id}" rows="15" emptyMessage="No brands to show"
+                         paginator="true" paginatorPosition="botton" widgetVar="tableWidget">
+                
+                <p:column headerText="Id">
+                    <h:outputText value="#{b.id}" />
+                </p:column>
+                <p:column headerText="Name" filterBy="#{b.name}" filterMatchMode="contains">
+                    <h:outputText value="#{b.name}" />
+                </p:column>
+                <p:column headerText="Created at">
+                      <h:outputText value="#{b.createdAt}" />
+                </p:column>
+                <p:column >
+                    <p:commandButton value="Delete" action="#{brands.deleteBrand}" update=":formList :formBrands" oncomplete="PF('tableWidget').filter();">
+                    <f:setPropertyActionListener value="#{b}" target="#{brands.selectedBrand}" />
+                </p:commandButton> 
+                   
+                </p:column>
+            </p:dataTable>
+            
+        </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

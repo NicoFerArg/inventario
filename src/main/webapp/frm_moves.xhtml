@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./template/main.xhtml">
+
+            <ui:define name="content">
+                <h:form id="fromCombo">
+            <p:growl/>
+            <h:panelGrid columns="2" cellpadding="6">
+                <p:outputLabel value="Client"/>
+                
+                <p:selectOneMenu id="cb_clients" value="#{moves.id_client}" required="true" requiredMessage="Must select a client">
+                    <f:selectItem itemLabel="Select a client" noSelectionOption="true"/>
+                    <f:selectItems var="c" value="#{moves.listClient}" itemLabel="#{c.name}" itemValue="#{c.id}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Move Type"/>
+                
+                <p:selectOneMenu id="cb_typemoves" value="#{moves.id_typemove}" required="true" requiredMessage="Must select a move type">
+                    <f:selectItem itemLabel="Select a move type" noSelectionOption="true"/>
+                    <f:selectItems var="t" value="#{moves.listTypeMove}" itemLabel="#{t.name}" itemValue="#{t.id}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Part"/>
+                
+                <p:selectOneMenu id="cb_part" value="#{moves.id_part}" required="true" requiredMessage="Must select a part">
+                    <f:selectItem itemLabel="Select a part" noSelectionOption="true"/>
+                    <f:selectItems var="p" value="#{moves.listPart}" itemLabel="#{p.name} Stock:  #{p.stock}" itemValue="#{p.id}"/>
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Quantity" for="QuantityIn"/>    
+                <p:inputText value="#{moves.quantity}" required="true" requiredMessage="Quantity is required" id="QuantityIn"/>
+                
+                <p:commandButton action="#{moves.save_move}" value="Save" update=":fromCombo :tableForm" oncomplete="PF('tableWidget').filter();"/>
+                
+                
+           </h:panelGrid>
+        </h:form> 
+        
+        
+        
+        
+        
+        
+        <h:form id="tableForm">
+            <p:dataTable id="tableMoves" value="#{moves.listMove}" 
+                         var="m" rowKey="#{m.id}" rows="15" emptyMessage="No moves to show"
+                         paginator="true" paginatorPosition="botton" widgetVar="tableWidget">
+                
+                <p:column headerText="Id">
+                    <h:outputText value="#{m.id}" />
+                </p:column>
+                <p:column headerText="Client">
+                    <h:outputText value="#{m.clients.name}" />
+                </p:column>
+                <p:column headerText="Move Type">
+                    <h:outputText value="#{m.typeMoves.name}" />
+                </p:column>
+                 <p:column headerText="Part">
+                     <h:outputText value="#{m.parts.name}" />
+                </p:column>
+                 <p:column headerText="Quantity">
+                     <h:outputText value="#{m.quantity}" />
+                </p:column>
+                <p:column headerText="Created at">
+                    <h:outputText value="#{m.createdAt}"/>
+                </p:column>
+                <p:column >
+               
+                </p:column>
+            </p:dataTable>
+        </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 30-12-2018 07:28:41 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.lipodico.inv.entities.Moves" table="moves" catalog="inventario" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="clients" class="com.lipodico.inv.entities.Clients" fetch="select" lazy="false">
+            <column name="id_clients" not-null="true" />
+        </many-to-one>
+        <many-to-one name="parts" class="com.lipodico.inv.entities.Parts" fetch="select" lazy="false">
+            <column name="id_parts" not-null="true" />
+        </many-to-one>
+        <many-to-one name="typeMoves" class="com.lipodico.inv.entities.TypeMoves" fetch="select" lazy="false">
+            <column name="id_move_types" not-null="true" />
+        </many-to-one>
+        <property name="quantity" type="int">
+            <column name="quantity" not-null="true" />
+        </property>
+        <property name="createdAt" type="timestamp" insert="false"  >
+            <column name="created_at" length="19" not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

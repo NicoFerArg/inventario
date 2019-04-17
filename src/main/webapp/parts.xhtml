@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Parts</title>
+    </h:head>
+    <h:body>
+        <h:form id="fromCombo">
+            <p:growl/>
+            <h:panelGrid columns="2" cellpadding="6">
+                <p:outputLabel value="Brand"/>
+                
+                <p:selectOneMenu id="c1" value="#{parts.id_brand}" required="true" requiredMessage="Must select a brand">
+                    <f:ajax event="change" listener="#{parts.changeBrand}" />
+                    <f:selectItem itemLabel="Select a brand" noSelectionOption="true"/>
+                    <f:selectItems var="b" value="#{parts.listBrand}" itemLabel="#{b.name}" itemValue="#{b.id}"/>
+                     </p:selectOneMenu>
+           </h:panelGrid>
+        </h:form>
+        
+        <h:form id="partForm">
+            <h:panelGrid columns="2" cellpadding="6">
+                <p:outputLabel value="Name" for="NameIn"/>    
+                <p:inputText value="#{parts.name}" required="true" requiredMessage="Name is required" id="NameIn"/>
+                <p:outputLabel value="Stock" for="StockIn"/>    
+                <p:inputText value="#{parts.stock}" required="true" requiredMessage="Stock is required" id="StockIn"/>
+                <p:outputLabel value="Stock Min." for="StockminIn"/>    
+                <p:inputText value="#{parts.stockmin}" required="true" requiredMessage="Stock Min. is required" id="StockminIn"/>
+                <p:outputLabel value="Stock Max." for="StockmaxIn"/>    
+                <p:inputText value="#{parts.stockmax}" required="true" requiredMessage="Stock Max. is required" id="StockmaxIn"/>
+                
+                <p:commandButton action="#{parts.save}" value="Save" update=":partForm :fromCombo :tableForm"/> 
+            </h:panelGrid>
+        </h:form>
+        
+        
+        
+        <h:form id="tableForm">
+            <p:dataTable id="tableParts" value="#{parts.listPart}" 
+                         var="p" rowKey="#{p.id}" rows="15" emptyMessage="No parts to show"
+                         paginator="true" paginatorPosition="botton" widgetVar="tableWidget">
+                
+                <p:column headerText="Id">
+                    <h:outputText value="#{p.id}" />
+                </p:column>
+                <p:column headerText="Name" filterBy="#{p.name}" filterMatchMode="contains">
+                    <h:outputText value="#{p.name}" />
+                </p:column>
+                <p:column headerText="Brand">
+                    <h:outputText value="#{p.brands.name}" />
+                </p:column>
+                 <p:column headerText="Stock">
+                     <h:outputText value="#{p.stock}" />
+                </p:column>
+                 <p:column headerText="Min Stock">
+                     <h:outputText value="#{p.stockMin}" />
+                </p:column>
+                 <p:column headerText="Max Stock">
+                     <h:outputText value="#{p.stockMax}" />
+                </p:column>
+                
+                <p:column headerText="Created at">
+                      <h:outputText value="#{p.createdAt}" />
+                </p:column>
+                <p:column >
+                    
+           
+                   
+                </p:column>
+            </p:dataTable>
+            
+        </h:form>
+        
+        
+        
+        
+    </h:body>
+</html>
+
